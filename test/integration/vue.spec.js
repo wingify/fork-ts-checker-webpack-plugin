@@ -10,7 +10,7 @@ var IncrementalChecker = require('../../lib/IncrementalChecker');
 
 describe('[INTEGRATION] vue', function () {
   this.timeout(30000);
-  process.setMaxListeners(20);   
+  process.setMaxListeners(20);
   var plugin;
   var files;
   var compiler;
@@ -79,10 +79,10 @@ describe('[INTEGRATION] vue', function () {
     createCompiler({ vue: true });
 
     var fileFound;
-    
+
     fileFound = checker.programConfig.fileNames.indexOf(files['example.vue']) >= 0;
     expect(fileFound).to.be.true;
-    
+
     fileFound = checker.programConfig.fileNames.indexOf(files['syntacticError.ts']) >= 0;
     expect(fileFound).to.be.true;
   });
@@ -90,11 +90,11 @@ describe('[INTEGRATION] vue', function () {
   it('should not create a Vue program config if vue=false', function () {
     createCompiler();
 
-    var fileFound;    
-    
+    var fileFound;
+
     fileFound = checker.programConfig.fileNames.indexOf(files['example.vue']) >= 0;
     expect(fileFound).to.be.false;
-    
+
     fileFound = checker.programConfig.fileNames.indexOf(files['syntacticError.ts']) >= 0;
     expect(fileFound).to.be.true;
   });
@@ -106,33 +106,33 @@ describe('[INTEGRATION] vue', function () {
 
     source = checker.program.getSourceFile(files['example.vue']);
     expect(source).to.not.be.undefined;
-    
+
     source = checker.program.getSourceFile(files['syntacticError.ts']);
-    expect(source).to.not.be.undefined;  
+    expect(source).to.not.be.undefined;
   });
 
   it('should not create a Vue program if vue=false', function () {
     createCompiler();
-    
+
     var source;
-    
+
     source = checker.program.getSourceFile(files['example.vue']);
     expect(source).to.be.undefined;
-    
+
     source = checker.program.getSourceFile(files['syntacticError.ts']);
-    expect(source).to.not.be.undefined;  
+    expect(source).to.not.be.undefined;
   });
 
   it('should get syntactic diagnostics from Vue program', function () {
     createCompiler({ tslint: true, vue: true });
 
-    const diagnostics = checker.program.getSyntacticDiagnostics();
-    expect(diagnostics.length).to.be.equal(1);    
+    var diagnostics = checker.program.getSyntacticDiagnostics();
+    expect(diagnostics.length).to.be.equal(1);
   });
 
   it('should not find syntactic errors when checkSyntacticErrors is false', function (callback) {
     createCompiler({ tslint: true, vue: true });
-    
+
     compiler.run(function(error, stats) {
       expect(stats.compilation.errors.length).to.be.equal(2);
       callback();
@@ -141,7 +141,7 @@ describe('[INTEGRATION] vue', function () {
 
   it('should find syntactic errors when checkSyntacticErrors is true', function (callback) {
     createCompiler({ tslint: true, vue: true, checkSyntacticErrors: true });
-    
+
     compiler.run(function(error, stats) {
       expect(stats.compilation.errors.length).to.be.equal(3);
       callback();

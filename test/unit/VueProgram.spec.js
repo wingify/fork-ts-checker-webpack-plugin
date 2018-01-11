@@ -24,7 +24,7 @@ describe('[UNIT] VueProgram', function () {
           'src/*'
         ]
       }
-    }
+    };
     var moduleNames = [
       './test.vue',
       '../test.vue',
@@ -46,20 +46,20 @@ describe('[UNIT] VueProgram', function () {
     var options = {};
     var moduleName = '@/test.vue';
 
-    resolvedModuleName = VueProgram.resolveNonTsModuleName(moduleName, containingFile, basedir, options);
+    var resolvedModuleName = VueProgram.resolveNonTsModuleName(moduleName, containingFile, basedir, options);
     expect(resolvedModuleName).to.be.equal('/base/dir/src/test.vue');
 
     options.baseUrl = '/baseurl1';
     resolvedModuleName = VueProgram.resolveNonTsModuleName(moduleName, containingFile, basedir, options);
     expect(resolvedModuleName).to.be.equal('/baseurl1/src/test.vue');
 
-    options.baseUrl = '/baseurl2';    
-    options.paths = { '@/*': ['src1/*'] }    
+    options.baseUrl = '/baseurl2';
+    options.paths = { '@/*': ['src1/*'] };
     resolvedModuleName = VueProgram.resolveNonTsModuleName(moduleName, containingFile, basedir, options);
     expect(resolvedModuleName).to.be.equal('/baseurl2/src1/test.vue');
 
-    options.baseUrl = '/baseurl3';    
-    options.paths = { '@/*': ['src1/src2/*'] }    
+    options.baseUrl = '/baseurl3';
+    options.paths = { '@/*': ['src1/src2/*'] };
     resolvedModuleName = VueProgram.resolveNonTsModuleName(moduleName, containingFile, basedir, options);
     expect(resolvedModuleName).to.be.equal('/baseurl3/src1/src2/test.vue');
   });
