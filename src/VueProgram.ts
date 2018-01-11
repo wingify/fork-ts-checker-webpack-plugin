@@ -41,10 +41,13 @@ class VueProgram {
     const pattern = options.paths ? options.paths['@/*'] : undefined;
     const substitution = pattern ? options.paths['@/*'][0].replace('*', '') : 'src';
     const isWildcard = moduleName.substr(0, 2) === '@/';
+    const isScopedModule = /^@[a-zA-Z0-9]+\/[a-zA-Z0-9]+/.test(moduleName);
     const isRelative = !path.isAbsolute(moduleName);
 
     if (isWildcard) {
       moduleName = path.resolve(baseUrl, substitution, moduleName.substr(2));
+    } else if (isScopedModule) {
+      moduleName = path.resolve(baseUrl, moduleName)
     } else if (isRelative) {
       moduleName = path.resolve(path.dirname(containingFile), moduleName);
     }
